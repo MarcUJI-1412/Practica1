@@ -20,9 +20,9 @@ public class Practica1 {
         while (iter.hasNext()) {
             Integer dato = iter.next();
             while (dato <= 0) {
-                dato = iter.next();
                 if (dato == null)
                     return resultado;
+                dato = iter.next();
             }
 
             boolean es_multiple = false;
@@ -48,16 +48,61 @@ public class Practica1 {
 
 
     static public Set<String> repetidos (Collection<Set<String>> col) {
-        Iterator<Set<String>> col_iter = col.iterator();
-        while (col_iter.hasNext()){
-            return null;
+        Set<String> resultado = new HashSet<>();
+
+        // Iteramos cada set de la coleccion
+        Iterator<Set<String>> set_iter = col.iterator();
+        while (set_iter.hasNext()){
+            Set<String> set_actual = set_iter.next();
+
+            // Iteramos cada elemento de cada Set
+            Iterator<String> elem_iter = set_actual.iterator();
+            while (elem_iter.hasNext()) {
+                String elemento = elem_iter.next();
+
+                int apariciones = 0;
+
+                // Iteramos de nuevo la coleccion
+                Iterator<Set<String>> otro_set_iter = col.iterator();
+                while (otro_set_iter.hasNext() && apariciones < 2) {
+                    Set<String> otro_set = otro_set_iter.next();
+                    if (otro_set.contains(elemento))
+                        apariciones++;
+                }
+
+                if (apariciones >= 2) {
+                    resultado.add(elemento);
+                }
+            }
         }
-        return null;
+
+        return resultado;
     }
 
 
     public static Set<Integer> interseccionImpares (Collection<Set<Integer>> col) {
-       return null;
+        Iterator<Set<Integer>> set_iter = col.iterator();
+
+        // Entrada vacía
+        if (! set_iter.hasNext())
+            return new HashSet<>();
+
+        Set<Integer> resultado = new HashSet<>(set_iter.next());
+
+        while (set_iter.hasNext()) {
+            resultado.retainAll(set_iter.next());
+        }
+
+        // Itera y elimina pares
+        Iterator<Integer> pares_iter = resultado.iterator();
+
+        while (pares_iter.hasNext()) {
+            if (pares_iter.next() % 2 == 0) {
+                pares_iter.remove();
+            }
+        }
+
+        return resultado;
     }
 
 
