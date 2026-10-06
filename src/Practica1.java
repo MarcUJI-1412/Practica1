@@ -20,7 +20,7 @@ public class Practica1 {
         while (iter.hasNext()) {
             Integer dato = iter.next();
             while (dato <= 0) {
-                if (dato == null)
+                if (! iter.hasNext())
                     return resultado;
                 dato = iter.next();
             }
